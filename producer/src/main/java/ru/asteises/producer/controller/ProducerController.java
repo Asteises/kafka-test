@@ -2,9 +2,8 @@ package ru.asteises.producer.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.asteises.producer.dto.ContainerValue;
 import ru.asteises.producer.service.ProducerService;
 
 @Slf4j
@@ -17,11 +16,12 @@ public class ProducerController {
 
 
     @PostMapping
-    public void sendMessage(String messageId, String message) {
+    public void sendMessage(@RequestParam String topic,
+                            @RequestBody ContainerValue containerValue) {
 
-        producerService.sendMessage(messageId, message);
-        System.out.println("Отправляем из контроллера в сервис: " + message);
+        producerService.sendMessage(topic, containerValue);
+        System.out.println("Отправляем из контроллера в сервис: " + containerValue);
 
-        log.info("Отправляем лог из контроллера в сервис: {}", message);
+        log.info("Отправляем лог из контроллера в сервис: {}", containerValue);
     }
 }
